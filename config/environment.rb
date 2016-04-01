@@ -1,9 +1,33 @@
 require File.join(File.dirname(__FILE__), 'boot')
 
 
-# RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.17' unless defined? RAILS_GEM_VERSION
+
+# # monkey patch for 2.0. Will ignore vendor gems.
+# if RUBY_VERSION >= "2.0.0"
+#   module Gem
+#     def self.source_index
+#       sources
+#     end
+#
+#     def self.cache
+#       sources
+#     end
+#
+#     SourceIndex = Specification
+#
+#     class SourceList
+#       # If you want vendor gems, this is where to start writing code.
+#       def search( *args ); []; end
+#       def each( &block ); end
+#       include Enumerable
+#     end
+#   end
+# end
 
 Rails::Initializer.run do |config|
+  # config.gem 'haml'
+  # config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
   config.time_zone = 'UTC'
   config.gem 'declarative_authorization', :source => 'http://gemcutter.org'
 
